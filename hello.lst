@@ -1,0 +1,35 @@
+     1                                  global _start 				
+     2                                  					
+     3                                  section .data				
+     4 00000000 68656C6C6F2C20776F-     	hello_str db "hello, world!"	
+     4 00000009 726C6421           
+     5                                  	str_len equ $ - hello_str	
+     6                                  					
+     7 0000000D 4572726F72              	err_str db "Error"		
+     8                                  	err_len equ $ - err_str 	
+     9                                  					
+    10                                  section .text				
+    11                                  _start:					
+    12 00000000 B801000000              	mov rax, 1			
+    13 00000005 BF01000000              	mov rdi, 1			
+    14 0000000A 48BE-                   	mov rsi, hello_str		
+    14 0000000C [0000000000000000] 
+    15 00000014 BA0D000000              	mov rdx, str_len 		
+    16 00000019 0F05                    	syscall				
+    17                                  					
+    18 0000001B 4839D0                  	cmp rax, rdx			
+    19 0000001E 741B                    	jz _exit			
+    20                                  					
+    21                                  _error:					
+    22 00000020 B801000000              	mov rax, 1			
+    23 00000025 BF01000000              	mov rdi, 1			
+    24 0000002A 48BE-                   	mov rsi, err_str		
+    24 0000002C [0D00000000000000] 
+    25 00000034 BA05000000              	mov rdx, err_len		
+    26 00000039 0F05                    	syscall				
+    27                                  					
+    28                                  _exit:					
+    29 0000003B B83C000000              	mov rax, 60			
+    30 00000040 BF00000000              	mov rdi, 0			
+    31 00000045 0F05                    	syscall				
+    32                                  
